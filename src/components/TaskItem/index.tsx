@@ -14,6 +14,7 @@ import ShouldUpdateDataContext from "../../contexts/shouldUpdateData/shouldUpdat
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import ModalInfosVisibleContext from "../../contexts/modalInfosVisible/modalInfosVisible";
 import { StorageData } from "../../types/storageData";
+import { FORM_TASK } from "../../config/constants";
 
 const TaskItem = ({
   checked,
@@ -40,7 +41,7 @@ const TaskItem = ({
     };
 
     const handleEdit = () =>
-      navigation.dispatch(CommonActions.navigate("FormTask", { id }));
+      navigation.dispatch(CommonActions.navigate(FORM_TASK, { id }));
 
     return (
       <View style={{ flexDirection: "row" }}>

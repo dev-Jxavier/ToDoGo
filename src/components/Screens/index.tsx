@@ -9,6 +9,7 @@ import { ShouldUpdateDataProvider } from "../../contexts/shouldUpdateData/should
 import ModalInfos from "../ModalInfos";
 import FloatButton from "../FloatButton";
 import { ModalInfosVisibleProvider } from "../../contexts/modalInfosVisible/modalInfosVisible";
+import { DAILY, FORM_TASK, MONTH } from "../../config/constants";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -33,8 +34,8 @@ function HomeTabs() {
           },
         }}
       >
-        <Tab.Screen name="Daily" component={Daily} />
-        <Tab.Screen name="Month" component={Month} />
+        <Tab.Screen name={DAILY} component={Daily} />
+        <Tab.Screen name={MONTH} component={Month} />
       </Tab.Navigator>
       <FloatButton />
       <ModalInfos />
@@ -52,7 +53,7 @@ const Screens = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="FormTask"
+          name={FORM_TASK}
           component={FormTask}
           options={{
             headerStyle: {

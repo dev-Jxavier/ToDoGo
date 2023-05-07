@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Theme } from "../../config/theme";
 import { useNavigation, CommonActions } from "@react-navigation/native";
+import { FORM_TASK } from "../../config/constants";
 
 const FloatButton = () => {
   const navigation = useNavigation();
@@ -11,7 +12,7 @@ const FloatButton = () => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.dispatch(CommonActions.navigate("FormTask"))}
+        onPress={() => navigation.dispatch(CommonActions.navigate(FORM_TASK))}
       >
         <MaterialIcons name="add" size={24} color="white" />
       </TouchableOpacity>
