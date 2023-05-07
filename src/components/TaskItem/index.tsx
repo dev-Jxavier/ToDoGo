@@ -40,7 +40,7 @@ const TaskItem = ({
     };
 
     const handleEdit = () =>
-      navigation.dispatch(CommonActions.navigate("CreateTask", { id }));
+      navigation.dispatch(CommonActions.navigate("FormTask", { id }));
 
     return (
       <View style={{ flexDirection: "row" }}>
