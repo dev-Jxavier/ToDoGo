@@ -11,9 +11,7 @@ const FloatButton = () => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() =>
-          navigation.dispatch(CommonActions.navigate("CreateTask"))
-        }
+        onPress={() => navigation.dispatch(CommonActions.navigate("FormTask"))}
       >
         <MaterialIcons name="add" size={24} color="white" />
       </TouchableOpacity>

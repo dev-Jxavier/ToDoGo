@@ -2,10 +2,19 @@ import React from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Theme } from "../../../../config/theme";
 
-const Button = () => {
+interface Props {
+  id: string;
+  onPress: () => void;
+}
+
+const Button = ({ id, onPress }: Props) => {
   return (
-    <TouchableOpacity style={styles.button} activeOpacity={0.9}>
-      <Text style={styles.textButton}>Create Task</Text>
+    <TouchableOpacity
+      style={styles.button}
+      activeOpacity={0.9}
+      onPress={onPress}
+    >
+      <Text style={styles.textButton}>{id ? "Save Edit" : "Create Task"}</Text>
     </TouchableOpacity>
   );
 };

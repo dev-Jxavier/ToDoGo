@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import FloatButton from "../FloatButton";
 import TasksDay from "../TasksDay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StorageData } from "../../types/storageData";
@@ -58,10 +57,9 @@ const Daily = () => {
         data={data}
         keyExtractor={(item) => item.date.getTime().toString()}
         renderItem={({ item }) => (
-          <TasksDay title={item.date.toLocaleDateString()} item={item.data} />
+          <TasksDay title={item.date.toDateString()} item={item.data} />
         )}
       />
-      <FloatButton />
     </View>
   );
 };
