@@ -25,7 +25,7 @@ export default function App() {
       <NavigationContainer>
         <Screens />
       </NavigationContainer>
-      <Toast position="bottom" visibilityTime={1000} />
+      <Toast position="bottom" visibilityTime={2000} />
     </>
   );
 }

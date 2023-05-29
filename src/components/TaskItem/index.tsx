@@ -1,20 +1,9 @@
 import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Swipeable } from "react-native-gesture-handler";
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import CheckCircle from "./components/CheckCircle";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ShouldUpdateDataContext from "../../contexts/shouldUpdateData/shouldUpdateData";
-import { CommonActions, useNavigation } from "@react-navigation/native";
 import ModalInfosVisibleContext from "../../contexts/modalInfosVisible/modalInfosVisible";
 import { StorageData } from "../../types/storageData";
-import { FORM_TASK } from "../../config/constants";
+import RightSwiple from "./components/RightSwiple";
 
 const TaskItem = ({
   checked,
@@ -24,8 +13,6 @@ const TaskItem = ({
   description,
   date,
 }: StorageData) => {
-  const navigation = useNavigation();
-  const { update, setUpdate } = useContext(ShouldUpdateDataContext);
   const { visible, setVisible, setData } = useContext(ModalInfosVisibleContext);
   const parsedTime = new Date(time);
   const formattedTime = parsedTime.toLocaleTimeString("en-US", {
@@ -34,38 +21,13 @@ const TaskItem = ({
     hour12: true,
   });
 
-  const renderRightActions = () => {
-    const handleDelete = async () => {
-      await AsyncStorage.removeItem(id);
-      setUpdate(!update);
-    };
-
-    const handleEdit = () =>
-      navigation.dispatch(CommonActions.navigate(FORM_TASK, { id }));
-
-    return (
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity onPress={handleEdit}>
-          <View style={{ ...styles.button, backgroundColor: "#1D3354" }}>
-            <MaterialIcons name="edit" size={24} color="white" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleDelete}>
-          <View style={{ ...styles.button, backgroundColor: "#D64045" }}>
-            <MaterialIcons name="delete" size={24} color="white" />
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   const handleOpenModal = () => {
     setData({ title, description, time, date });
     setVisible(!visible);
   };
 
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <RightSwiple id={id}>
       <TouchableWithoutFeedback onPress={handleOpenModal}>
         <View style={styles.container}>
           <CheckCircle checked={checked} id={id} />
@@ -84,7 +46,7 @@ const TaskItem = ({
           </View>
         </View>
       </TouchableWithoutFeedback>
-    </Swipeable>
+    </RightSwiple>
   );
 };
 
@@ -115,15 +77,6 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 0.5)",
     fontFamily: "Josefin-Sans-regular",
     fontSize: 12,
-  },
-  button: {
-    height: 50,
-    width: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 4,
-    marginLeft: 8,
   },
 });
 

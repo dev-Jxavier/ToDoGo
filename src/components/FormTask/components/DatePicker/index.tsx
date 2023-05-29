@@ -34,7 +34,7 @@ const PickerDate = ({ date, onChangeDate }: Props) => {
           value={date}
           mode={"date"}
           is24Hour={true}
-          textColor={Theme().third}
+          textColor={Theme.third}
           display="spinner"
           onChange={handleDate}
         />

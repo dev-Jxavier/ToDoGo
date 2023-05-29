@@ -72,16 +72,24 @@ const FormTask = () => {
   };
 
   useEffect(() => {
-    const getStorageData = async () => {
-      const data = await AsyncStorage.getItem(id);
-      const parseData: StorageData = JSON.parse(data!);
-      setFields({
-        ...parseData,
-        date: new Date(parseData.date),
-        time: new Date(parseData.time),
-      });
-    };
-    id && getStorageData();
+    id &&
+      (async () => {
+        try {
+          const data = await AsyncStorage.getItem(id);
+          const parseData: StorageData = JSON.parse(data!);
+          setFields({
+            ...parseData,
+            date: new Date(parseData.date),
+            time: new Date(parseData.time),
+          });
+        } catch {
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "Error to get data",
+          });
+        }
+      })();
   }, [id]);
 
   return (
@@ -128,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    backgroundColor: Theme().secondary,
+    backgroundColor: Theme.secondary,
     height: 40,
     marginTop: 46,
     display: "flex",

@@ -27,7 +27,7 @@ const CheckCircle = ({ checked, id }: { checked: boolean; id: string }) => {
           onPress={handlePress}
           name="radio-button-unchecked"
           size={24}
-          color={Theme().third}
+          color={Theme.third}
           style={{ marginRight: 10 }}
         />
       ) : (
@@ -35,7 +35,7 @@ const CheckCircle = ({ checked, id }: { checked: boolean; id: string }) => {
           onPress={handlePress}
           name="check-circle"
           size={24}
-          color={Theme().third}
+          color={Theme.third}
           style={{ marginRight: 10 }}
         />
       )}

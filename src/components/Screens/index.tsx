@@ -20,7 +20,7 @@ function HomeTabs() {
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: Theme().primary,
+            backgroundColor: Theme.primary,
           },
           tabBarLabelStyle: {
             color: "#fff",
@@ -29,7 +29,7 @@ function HomeTabs() {
             fontFamily: "Josefin-Sans-medium",
           },
           tabBarIndicatorStyle: {
-            backgroundColor: Theme().secondary,
+            backgroundColor: Theme.secondary,
             height: 5,
           },
         }}
@@ -57,7 +57,7 @@ const Screens = () => {
           component={FormTask}
           options={{
             headerStyle: {
-              backgroundColor: Theme().primary,
+              backgroundColor: Theme.primary,
             },
             headerTitle: () => null,
             headerTintColor: "#fff",

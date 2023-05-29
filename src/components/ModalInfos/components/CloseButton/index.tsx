@@ -10,7 +10,7 @@ const CloseButton = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setVisible(!visible)}>
-        <MaterialIcons name="close" size={24} color={Theme().primary} />
+        <MaterialIcons name="close" size={24} color={Theme.primary} />
       </TouchableOpacity>
     </View>
   );

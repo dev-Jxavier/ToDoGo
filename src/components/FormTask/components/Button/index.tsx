@@ -21,7 +21,7 @@ const Button = ({ id, onPress }: Props) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Theme().secondary,
+    backgroundColor: Theme.secondary,
     height: 40,
     marginTop: 46,
     display: "flex",
