@@ -1,6 +1,8 @@
 <h1 align="center"> ToDoGo :pencil: </h1>
 
 ![In Progress](https://img.shields.io/badge/Status-in%20progress-yellow?style=for-the-badge)
+![Expo](https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37)
+![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 <!-- ## About
 Welcome to my Spotify clone project repository! This project was developed with the goal of enhancing my skills in NextJS/ReactJs and Tailwind CSS. This project was a great opportunity to learn and experiment with these popular technologies. Feel free to explore the source code and try it out in your own environment. -->
