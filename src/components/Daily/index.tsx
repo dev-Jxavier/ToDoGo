@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import FloatButton from "../FloatButton";
-import TasksDay from "../TasksDay";
+import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TasksDay from "../TasksDay";
 import { StorageData } from "../../types/storageData";
 import ShouldUpdateDataContext from "../../contexts/shouldUpdateData/shouldUpdateData";
 
@@ -36,19 +36,30 @@ const Daily = () => {
       }
     });
 
-    return newArray.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return sortData(newArray);
+  };
+
+  const sortData = (data: GroupedData[]) => {
+    return data.sort((a, b) => a.date.getTime() - b.date.getTime());
   };
 
   useEffect(() => {
-    const getMultData = async () => {
-      const allKeys = await AsyncStorage.getAllKeys();
-      const allData = await AsyncStorage.multiGet(allKeys);
-      const parseData: StorageData[] = allData.map((item) =>
-        JSON.parse(item[1]!)
-      );
-      setData(groupForDay(parseData));
-    };
-    getMultData();
+    (async () => {
+      try {
+        const allKeys = await AsyncStorage.getAllKeys();
+        const allData = await AsyncStorage.multiGet(allKeys);
+        const parseData: StorageData[] = allData.map((item) =>
+          JSON.parse(item[1]!)
+        );
+        setData(groupForDay(parseData));
+      } catch (err) {
+        Toast.show({
+          type: "error",
+          text1: "Erro!",
+          text2: "Not possible to load data!",
+        });
+      }
+    })();
   }, [update]);
 
   return (
@@ -58,10 +69,9 @@ const Daily = () => {
         data={data}
         keyExtractor={(item) => item.date.getTime().toString()}
         renderItem={({ item }) => (
-          <TasksDay title={item.date.toLocaleDateString()} item={item.data} />
+          <TasksDay title={item.date.toDateString()} item={item.data} />
         )}
       />
-      <FloatButton />
     </View>
   );
 };
@@ -70,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
   },
   title: {
     fontFamily: "Josefin-Sans-regular",

@@ -1,26 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { format } from "date-fns";
+import Toast from "react-native-toast-message";
 import { Theme } from "../../config/theme";
 import Title from "./components/Title";
 import Description from "./components/Description";
 import Calendar from "./components/Calendar";
 import PickerDate from "./components/DatePicker";
 import { DatePickerVisibleProvider } from "../../contexts/datePickerVisible/datePickerVisible";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StorageData } from "../../types/storageData";
 import { TimePickerVisibleProvider } from "../../contexts/timePickerVisible/timePickerVisible";
 import TimePicker from "./components/TimePicker";
 import ShouldUpdateDataContext from "../../contexts/shouldUpdateData/shouldUpdateData";
+import Button from "./components/Button";
 
-//Ver formas de isolar o botão em um componente {TODO}
-const CreateTask = () => {
-  const now: Date = new Date();
+type ParamList = {
+  Param: { id: string };
+};
 
+const FormTask = () => {
   const { update, setUpdate } = useContext(ShouldUpdateDataContext);
+  const route = useRoute<RouteProp<ParamList, "Param">>();
   const navigation = useNavigation();
+
+  const now: Date = new Date();
+  const { id } = route.params || "";
+
   const [fields, setFields] = useState<StorageData>({
     id: "",
     title: "",
@@ -35,16 +42,55 @@ const CreateTask = () => {
   };
 
   const storageData = async () => {
+    if (!fields.title) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Title is required!",
+      });
+      return;
+    }
+
     try {
-      const id = uuid.v4().toString();
-      const item = { ...fields, id };
-      await AsyncStorage.setItem(id, JSON.stringify(item));
-      navigation.goBack();
+      if (id) {
+        await AsyncStorage.setItem(id, JSON.stringify(fields));
+        navigation.goBack();
+      } else {
+        const id = uuid.v4().toString();
+        const item = { ...fields, id };
+        await AsyncStorage.setItem(id, JSON.stringify(item));
+        navigation.goBack();
+      }
       setUpdate(!update);
     } catch (error) {
-      Alert.alert("Error to save data");
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Error to save data",
+      });
     }
   };
+
+  useEffect(() => {
+    id &&
+      (async () => {
+        try {
+          const data = await AsyncStorage.getItem(id);
+          const parseData: StorageData = JSON.parse(data!);
+          setFields({
+            ...parseData,
+            date: new Date(parseData.date),
+            time: new Date(parseData.time),
+          });
+        } catch {
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: "Error to get data",
+          });
+        }
+      })();
+  }, [id]);
 
   return (
     <DatePickerVisibleProvider>
@@ -61,13 +107,7 @@ const CreateTask = () => {
             />
             <Calendar date={fields.date} time={fields.time} />
           </View>
-          <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.9}
-            onPress={storageData}
-          >
-            <Text style={styles.textButton}>Create Task</Text>
-          </TouchableOpacity>
+          <Button id={id} onPress={storageData} />
           <PickerDate
             date={fields.date}
             onChangeDate={(value) => handleFieldChange("date", value)}
@@ -96,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    backgroundColor: Theme().secondary,
+    backgroundColor: Theme.secondary,
     height: 40,
     marginTop: 46,
     display: "flex",
@@ -110,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateTask;
+export default FormTask;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useFonts } from "expo-font";
 import { StatusBar } from "react-native";
+import Toast from "react-native-toast-message";
 import { NavigationContainer } from "@react-navigation/native";
 import Header from "./src/components/Header";
 import Screens from "./src/components/Screens";
@@ -24,6 +25,7 @@ export default function App() {
       <NavigationContainer>
         <Screens />
       </NavigationContainer>
+      <Toast position="bottom" visibilityTime={2000} />
     </>
   );
 }

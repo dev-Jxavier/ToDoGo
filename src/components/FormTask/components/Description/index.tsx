@@ -11,7 +11,11 @@ const Description = ({ description, onChange }: Props) => {
 
   return (
     <TextInput
-      style={{ ...styles.description, height: Math.max(50, inputHeight) }}
+      style={{
+        ...styles.description,
+        height: Math.max(50, inputHeight),
+        paddingVertical: inputHeight > 50 ? 12 : 0,
+      }}
       placeholder="Description"
       placeholderTextColor={"rgba(0, 0, 0, 0.6)"}
       multiline={true}
@@ -20,6 +24,7 @@ const Description = ({ description, onChange }: Props) => {
       }}
       defaultValue={description}
       onChangeText={(text) => onChange(text)}
+      maxLength={200}
     />
   );
 };

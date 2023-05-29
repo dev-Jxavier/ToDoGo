@@ -19,6 +19,8 @@ const TasksDay = ({ title, item }: TasksDayProps) => {
           <TaskItem
             id={item.id}
             title={item.title}
+            description={item.description}
+            date={item.date}
             time={item.time}
             checked={item.checked}
           />

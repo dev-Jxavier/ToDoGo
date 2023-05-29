@@ -34,7 +34,7 @@ const TimePicker = ({ time, onChangeTime }: Props) => {
           value={time}
           mode={"time"}
           is24Hour={true}
-          textColor={Theme().primary}
+          textColor={Theme.primary}
           display="spinner"
           onChange={handleTime}
         />
