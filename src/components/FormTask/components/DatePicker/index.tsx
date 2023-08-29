@@ -37,6 +37,7 @@ const PickerDate = ({ date, onChangeDate }: Props) => {
           textColor={Theme.third}
           display="spinner"
           onChange={handleDate}
+          minimumDate={new Date()}
         />
       )}
     </View>

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TasksDay from "../TasksDay";
 import { StorageData } from "../../types/storageData";
 import ShouldUpdateDataContext from "../../contexts/shouldUpdateData/shouldUpdateData";
+import NoTasks from "../NoTasks";
 
 interface GroupedData {
   date: Date;
@@ -61,6 +62,10 @@ const Daily = () => {
       }
     })();
   }, [update]);
+
+  if (!data.length) {
+    return <NoTasks />;
+  }
 
   return (
     <View style={styles.container}>

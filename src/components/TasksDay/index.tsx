@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import TaskItem from "../TaskItem";
 import { StorageData } from "../../types/storageData";
+import NoTasks from "../NoTasks";
 
 interface TasksDayProps {
   title: string;
@@ -9,6 +10,10 @@ interface TasksDayProps {
 }
 
 const TasksDay = ({ title, item }: TasksDayProps) => {
+  if (!item.length) {
+    return <NoTasks />;
+  }
+
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
